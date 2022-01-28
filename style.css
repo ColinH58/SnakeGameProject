@@ -8,10 +8,22 @@ body {
     background-color: black;
 }
 
-.GameBoard {
+#GameBoard {
     background-color: whitesmoke;
     width: 100vmin;
     height: 100vmin;
     display: grid;
-    
+    grid-template-rows: repeat(25, 1fr);
+    grid-template-columns: repeat(25, 1fr);
 }
+
+#snake {
+    background-color: green;
+    border: .5vmin solid black;
+}
+
+#apple {
+    background-color: red;
+    border: .5vmin solid black;
+}
+
