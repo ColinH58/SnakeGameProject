@@ -21,6 +21,19 @@ let moveDirection = {x: 0, y: 0};
 let apple = {x: 1, y: 1};
 let snakeGrowth = 1;
 
+//Creates the snake and removes the trailing cell as it moves
+function drawSnake(gameBoard) {
+    gameBoard.innerHTML = '';
+    snakeBody.forEach(segment => {
+        const snakeSection = document.createElement('div')
+        snakeSection.style.gridRowStart = segment.y
+        snakeSection.style.gridColumnStart = segment.x
+        snakeSection.classList.add('snake')
+        gameBoard.appendChild(snakeSection)
+    })
+};
+
+//Handles controlling the snake's direction with user input
 function changeDirection() {
     window.addEventListener('keydown', function(e) {
         if (e.key === 'w' || e.key === 'ArrowUp') {
@@ -47,17 +60,7 @@ function changeDirection() {
     return moveDirection
 };
 
-function drawSnake(gameBoard) {
-    gameBoard.innerHTML = '';
-    snakeBody.forEach(segment => {
-        const snakeSection = document.createElement('div')
-        snakeSection.style.gridRowStart = segment.y
-        snakeSection.style.gridColumnStart = segment.x
-        snakeSection.classList.add('snake')
-        gameBoard.appendChild(snakeSection)
-    })
-};
-
+//Takes in the ChangeDirection function and shifts the snake array
 function moveSnake(){
     let input = changeDirection()
     for(let i = snakeBody.length - 2; i >= 0; i--) {
@@ -67,6 +70,7 @@ function moveSnake(){
     snakeBody[0].y += input.y
 };
 
+//Creates the apple
 function placeFood() {
     const foodPlacement = document.createElement('div')
     foodPlacement.style.gridRowStart = apple.y
@@ -79,6 +83,7 @@ function randomizeApple() {
 
 };
 
+//Puts all the above logic together and checks for the game's state
 function renderGame() {
     setTimeout(renderGame, 1000 / difficulty);
     drawSnake(gameBoard);
@@ -87,4 +92,5 @@ function renderGame() {
     randomizeApple();
 };
 
+//Runs the Game!
 renderGame();
