@@ -11,25 +11,12 @@ BONUS
 09 can set the difficulty (speed of snake)
 10 can keep track of my stats (maximum points, average points, etc.) between games
 */
-// state
-let initialState;
+const gameBoard = document.getElementById('GameBoard');
+let score = 0;
+let highScore = 0;
+let gameState = true;
+let difficulty = 2;
 
-function buildInitialState() {
+function renderGame() {
 
-}
-
-// render
-function renderState() {
-
-}
-
-// maybe a dozen or so helper functions for tiny pieces of the interface
-
-// listeners
-function onBoardClick() {
-  // update state, maybe with another dozen or so helper functions...
-
-  renderState() // show the user the new state
-}
-const board = document.getElementById('board');
-board.addEventListener('click', onBoardClick); // etc
+};
