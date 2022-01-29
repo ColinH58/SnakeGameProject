@@ -11,15 +11,23 @@ BONUS
 09 can set the difficulty (speed of snake)
 10 can keep track of my stats (maximum points, average points, etc.) between games
 */
+//Hooks into the GameBoard div
 const gameBoard = document.getElementById('GameBoard');
+
+//Used to check if the game is active or over
+let gameState = true;
+
+//Adjust this to change the difficulty. The higher the number the faster the snake moves
+let difficulty = 6;
+
+//Adjust this to change the difficulty. The higher the number the fast the snake grows
+let snakeGrowth = 1;
+
 let score = 0;
 let highScore = 0;
-let gameState = true;
-let difficulty = 6;
 let snakeBody = [{x: 13, y: 13}];
 let moveDirection = {x: 0, y: 0};
 let apple = {x: 1, y: 1};
-let snakeGrowth = 1;
 
 //Creates the snake and removes the trailing cell as it moves
 function drawSnake(gameBoard) {
