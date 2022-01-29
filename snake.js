@@ -15,8 +15,76 @@ const gameBoard = document.getElementById('GameBoard');
 let score = 0;
 let highScore = 0;
 let gameState = true;
-let difficulty = 2;
+let difficulty = 6;
+let snakeBody = [{x: 13, y: 13}];
+let moveDirection = {x: 0, y: 0};
+let apple = {x: 1, y: 1};
+let snakeGrowth = 1;
 
-function renderGame() {
+function changeDirection() {
+    window.addEventListener('keydown', function(e) {
+        if (e.key === 'w' || e.key === 'ArrowUp') {
+            if (moveDirection.y === 0) {
+            moveDirection = {x: 0, y: -1}
+            } 
+        }
+        if (e.key === 's' || e.key === 'ArrowDown') {
+            if (moveDirection.y === 0) {
+            moveDirection = {x: 0, y: 1}
+            }
+        }
+        if (e.key === 'a' || e.key === 'ArrowLeft') {
+            if (moveDirection.x === 0) {
+            moveDirection = {x: -1, y: 0}
+            }
+        }
+        if (e.key === 'd' || e.key === 'ArrowRight') {
+            if (moveDirection.x === 0) {
+            moveDirection = {x: 1, y: 0}
+            }
+        }
+    })
+    return moveDirection
+};
+
+function drawSnake(gameBoard) {
+    gameBoard.innerHTML = '';
+    snakeBody.forEach(segment => {
+        const snakeSection = document.createElement('div')
+        snakeSection.style.gridRowStart = segment.y
+        snakeSection.style.gridColumnStart = segment.x
+        snakeSection.classList.add('snake')
+        gameBoard.appendChild(snakeSection)
+    })
+};
+
+function moveSnake(){
+    let input = changeDirection()
+    for(let i = snakeBody.length - 2; i >= 0; i--) {
+        snakeBody[i + 1] = {...snakeBody[i]}
+    }
+    snakeBody[0].x += input.x
+    snakeBody[0].y += input.y
+};
+
+function placeFood() {
+    const foodPlacement = document.createElement('div')
+    foodPlacement.style.gridRowStart = apple.y
+    foodPlacement.style.gridColumnStart = apple.x
+    foodPlacement.classList.add('apple')
+    gameBoard.appendChild(foodPlacement)
+};
+
+function randomizeApple() {
 
 };
+
+function renderGame() {
+    setTimeout(renderGame, 1000 / difficulty);
+    drawSnake(gameBoard);
+    moveSnake();
+    placeFood(gameBoard);
+    randomizeApple();
+};
+
+renderGame();

@@ -1,29 +1,28 @@
 body {
     margin: 0;
-    height: 100vh;
-    width: 100vw;
+    background-color: black;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: black;
+    height: 100vh;
+    width: 100vw;
 }
 
 #GameBoard {
     background-color: whitesmoke;
+    display: grid;
+    grid-template-rows: repeat(26, 1fr);
+    grid-template-columns: repeat(26, 1fr);
     width: 100vmin;
     height: 100vmin;
-    display: grid;
-    grid-template-rows: repeat(25, 1fr);
-    grid-template-columns: repeat(25, 1fr);
 }
 
-#snake {
+.snake {
     background-color: green;
     border: .5vmin solid black;
 }
 
-#apple {
+.apple {
     background-color: red;
     border: .5vmin solid black;
 }
-
