@@ -22,7 +22,7 @@ let gameState = true;
 let difficulty = 6;
 
 //Adjust this to change the difficulty. The higher the number the fast the snake grows
-let snakeGrowthRate = 6;
+let snakeGrowthRate = 1;
 let bodyGrowth = 0;
 
 
@@ -129,7 +129,7 @@ function snakeGrow(rate) {
 //Handles the actual growth logic for the snake
 function addLength() {
     for (let i = 0; i < bodyGrowth; i++) {
-        score.innerText() += 1;
+        score.textContent += 1;
         snakeBody.push({...snakeBody[snakeBody.length - 1]})
     }
     bodyGrowth = 0
