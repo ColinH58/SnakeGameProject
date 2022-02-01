@@ -9,12 +9,19 @@ body {
 }
 
 #GameBoard {
+    z-index: 1;
     background-color: whitesmoke;
     display: grid;
     grid-template-rows: repeat(26, 1fr);
     grid-template-columns: repeat(26, 1fr);
     width: 100vmin;
     height: 100vmin;
+}
+
+#Score {
+    color: black;
+    z-index: 2;
+    float: left;
 }
 
 .snake {

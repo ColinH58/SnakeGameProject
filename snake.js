@@ -22,10 +22,11 @@ let gameState = true;
 let difficulty = 6;
 
 //Adjust this to change the difficulty. The higher the number the fast the snake grows
-let snakeGrowthRate = 1;
+let snakeGrowthRate = 6;
 let bodyGrowth = 0;
 
-let score = 0;
+
+let score = document.getElementById('Score');
 let highScore = 0;
 let snakeBody = [{x: 13, y: 13}];
 let moveDirection = {x: 0, y: 0};
@@ -113,8 +114,9 @@ function check(food, snake) {
 };
 
 //Function to check if the snake and food intersect
-function snakeEat(position) {
-    return snakeBody.some(segment => {
+function snakeEat(position, {ignoreHead = false} = {}) {
+    return snakeBody.some((segment, index) => {
+        if (ignoreHead === true && index === 0) return false
         return check(segment, position)
     })
 };
@@ -127,10 +129,45 @@ function snakeGrow(rate) {
 //Handles the actual growth logic for the snake
 function addLength() {
     for (let i = 0; i < bodyGrowth; i++) {
+        score.innerText() += 1;
         snakeBody.push({...snakeBody[snakeBody.length - 1]})
     }
     bodyGrowth = 0
 };
+
+//Helper function
+function snakeHeadLocation() {
+    return snakeBody[0]
+};
+
+//Helper function
+function hitWall(check) {
+    if (check.x < 1 || check.x > 26 || check.y < 1 || check.y > 26) {
+        return true;
+    }
+};
+
+//Helper function
+function snakeIntersection() {
+    return snakeEat(snakeBody[0], {ignoreHead: true})
+};
+
+//Handles the game over logic with the help of the above functions
+function gameOver() {
+    if(hitWall(snakeHeadLocation()) || snakeIntersection()) {
+        gameState = false;
+    }
+}
+
+//Handles the game reset
+function gameRestart() {
+    if (gameState === false) {
+        if (confirm(`Your score was ${score}! Press "OK" to try again!`)) {
+            window.location = '/'
+        }
+        return
+    }
+}
 
 //Handles the check, growth, and calls the randomization of the apple
 function updateGame() {
@@ -142,11 +179,15 @@ function updateGame() {
 
 //Puts all the above logic together and checks for the game's state
 function renderGame() {
-    setTimeout(renderGame, 1000 / difficulty);
-    drawSnake(gameBoard);
-    placeFood(gameBoard);
-    moveSnake();
-    updateGame();
+    if (gameState) {
+        setTimeout(renderGame, 1000 / difficulty);
+        drawSnake(gameBoard);
+        placeFood(gameBoard);
+        moveSnake();
+        updateGame();
+        gameOver();
+    }
+    gameRestart();
 };
 
 //Runs the Game!
