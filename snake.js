@@ -81,6 +81,7 @@ function changeDirection() {
 
 //Takes in the ChangeDirection function and shifts the snake array
 function moveSnake(){
+    addSegments()
     let input = changeDirection()
     for(let i = snakeBody.length - 2; i >= 0; i--) {
         snakeBody[i + 1] = {...snakeBody[i]}
@@ -89,10 +90,21 @@ function moveSnake(){
     snakeBody[0].y += input.y
 };
 
-//Randomizes where the apple spawns
+//Helper function to make sure the apple doesn't spawn outside the grid or in the snake
+function safeLocation() {
+    return (
+        apple.x = Math.floor(Math.random() * 26) + 1,
+        apple.y = Math.floor(Math.random() * 26) + 1
+    )
+};
+
+//Randomizes where the apple spawns with the help of the helper function
 function randomizeApple() {
-    apple.x = Math.floor(Math.random() * 26)
-    apple.y = Math.floor(Math.random() * 26)
+    let randomizedApple
+    while (randomizedApple == null || snakeEat(randomizedApple)) {
+        randomizedApple = safeLocation()
+    }
+    return randomizedApple;
 };
 
 //Helper function to check if the snake and food intersect
@@ -107,9 +119,16 @@ function snakeEat(position) {
     })
 };
 
-//Sets the growth rate for the snake
+//Helper function that sets the growth rate for the snake
 function snakeGrow(rate) {
     bodyGrowth += rate
+};
+
+function addSegments() {
+    for (let i = 0; i < bodyGrowth; i++) {
+        snakeBody.push({...snakeBody[snakeBody.length - 1]})
+    }
+    bodyGrowth = 0
 };
 
 //Handles the check, growth, and calls the randomization of the apple
