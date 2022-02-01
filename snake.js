@@ -81,7 +81,7 @@ function changeDirection() {
 
 //Takes in the ChangeDirection function and shifts the snake array
 function moveSnake(){
-    addSegments()
+    addLength()
     let input = changeDirection()
     for(let i = snakeBody.length - 2; i >= 0; i--) {
         snakeBody[i + 1] = {...snakeBody[i]}
@@ -124,7 +124,8 @@ function snakeGrow(rate) {
     bodyGrowth += rate
 };
 
-function addSegments() {
+//Handles the actual growth logic for the snake
+function addLength() {
     for (let i = 0; i < bodyGrowth; i++) {
         snakeBody.push({...snakeBody[snakeBody.length - 1]})
     }
@@ -145,7 +146,7 @@ function renderGame() {
     drawSnake(gameBoard);
     placeFood(gameBoard);
     moveSnake();
-    updateGame()
+    updateGame();
 };
 
 //Runs the Game!
