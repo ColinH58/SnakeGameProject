@@ -18,8 +18,8 @@ const gameBoard = document.getElementById('GameBoard');
 //Used to check if the game is active or over
 let gameState = true;
 
-//Adjust this to change the difficulty. The higher the number the faster the snake moves, 6 is the default
-let difficulty = 6;
+//Adjust this to change the difficulty. The higher the number the faster the snake moves, 10 is the default
+let difficulty = 10;
 
 //Adjust this to change the difficulty. The higher the number the fast the snake grows
 let snakeGrowthRate = 1;
@@ -27,10 +27,13 @@ let bodyGrowth = 0;
 
 
 let score = document.getElementById('Score');
-let highScore = 0;
-let snakeBody = [{x: 13, y: 13}];
+let newScore = 0;
+let highScore = document.getElementById('HighScore');
+let newHighScore = 0;
+
+let snakeBody = [{x: 12, y: 12}];
 let moveDirection = {x: 0, y: 0};
-let apple = {x: 5, y: 5};
+let apple = {x: 4, y: 4};
 
 //Creates the snake and removes the trailing cell as it moves
 function drawSnake(gameBoard) {
@@ -94,8 +97,8 @@ function moveSnake(){
 //Helper function to make sure the apple doesn't spawn outside the grid or in the snake
 function safeLocation() {
     return (
-        apple.x = Math.floor(Math.random() * 26) + 1,
-        apple.y = Math.floor(Math.random() * 26) + 1
+        apple.x = Math.floor(Math.random() * 23) - 1,
+        apple.y = Math.floor(Math.random() * 23) - 1
     )
 };
 
@@ -126,10 +129,15 @@ function snakeGrow(rate) {
     bodyGrowth += rate
 };
 
+function updateScore() {
+    newScore++
+    return score.innerText = ("Score: " + newScore)
+}
+
 //Handles the actual growth logic for the snake
 function addLength() {
     for (let i = 0; i < bodyGrowth; i++) {
-        score.textContent += 1;
+        updateScore()
         snakeBody.push({...snakeBody[snakeBody.length - 1]})
     }
     bodyGrowth = 0
@@ -142,7 +150,7 @@ function snakeHeadLocation() {
 
 //Helper function
 function hitWall(check) {
-    if (check.x < 1 || check.x > 26 || check.y < 1 || check.y > 26) {
+    if (check.x <= -1 || check.x >= 26 || check.y <= -1 || check.y >= 26) {
         return true;
     }
 };
@@ -162,7 +170,9 @@ function gameOver() {
 //Handles the game reset
 function gameRestart() {
     if (gameState === false) {
-        if (confirm(`Your score was ${score}! Press "OK" to try again!`)) {
+        if (confirm(`Your score was ${newScore}! Press "OK" to try again!`)) {
+            newScore = newHighScore
+            highScore.innerText = ("High Score: " + newHighScore)
             window.location = '/'
         }
         return
