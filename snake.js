@@ -97,8 +97,8 @@ function moveSnake(){
 //Helper function to make sure the apple doesn't spawn outside the grid or in the snake
 function safeLocation() {
     return (
-        apple.x = Math.floor(Math.random() * 23) - 1,
-        apple.y = Math.floor(Math.random() * 23) - 1
+        apple.x = Math.floor(Math.random() * 23) + 1,
+        apple.y = Math.floor(Math.random() * 23) + 1
     )
 };
 
@@ -150,7 +150,7 @@ function snakeHeadLocation() {
 
 //Helper function
 function hitWall(check) {
-    if (check.x <= -1 || check.x >= 26 || check.y <= -1 || check.y >= 26) {
+    if (check.x <= 0 || check.x > 24 || check.y <= 0 || check.y > 24) {
         return true;
     }
 };
