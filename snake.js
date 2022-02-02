@@ -150,7 +150,7 @@ function snakeHeadLocation() {
 
 //Helper function
 function hitWall(check) {
-    if (check.x <= 0 || check.x > 24 || check.y <= 0 || check.y > 24) {
+    if (check.x < 0 || check.x > 25 || check.y < 0 || check.y > 25) {
         return true;
     }
 };
