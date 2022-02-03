@@ -11,24 +11,26 @@ X 8 can set the difficulty (speed of snake)
 9 can keep track of my stats (maximum points, average points, etc.) between games
 */
 
-//Hooks into the GameBoard div
+//Hooks into the gameboard
 const gameBoard = document.getElementById('GameBoard');
 
 //Used to check if the game is active or over
 let gameState = true;
 
-//Adjust this to change the difficulty. The higher the number the faster the snake moves, 10 is the default
+//Hooks into the difficulty slider to divide by in the render function
 let difficulty = document.getElementById("DifficultySlider");
 
-//Adjust this to change the difficulty. The higher the number the fast the snake grows
+//Used to set the snake growth rate. The higher the number the faster the snake grows
 let snakeGrowthRate = 1;
 let bodyGrowth = 0;
 
+//Hooks into the score elements and allows for updates
 let score = document.getElementById('Score');
 let newScore = 0;
 let highScore = document.getElementById('HighScore');
 let newHighScore = 0;
 
+//Creates the snake and apple and sets them to a default location
 let snakeBody = [{x: 12, y: 12}];
 let moveDirection = {x: 0, y: 0};
 let apple = {x: 4, y: 4};
@@ -45,7 +47,7 @@ function drawSnake(gameBoard) {
     })
 };
 
-//Creates the apple and checks if it has been eaten
+//Creates the new apple location, to be used after eating with helper functions
 function placeFood() {
     const foodPlacement = document.createElement('div')
     foodPlacement.style.gridRowStart = apple.y
@@ -54,7 +56,7 @@ function placeFood() {
     gameBoard.appendChild(foodPlacement)
 };
 
-//Handles controlling the snake's direction with user input
+//Handles controlling the snake's direction guided by user input
 function changeDirection() {
     window.addEventListener('keydown', function(e) {
         if (e.key === 'w' || e.key === 'ArrowUp') {
@@ -114,7 +116,7 @@ function check(food, snake) {
     return food.x === snake.x && food.y === snake.y
 };
 
-//Function to check if the snake and food intersect
+//Function to check if the snake's head and food intersect
 function snakeEat(position, {ignoreHead = false} = {}) {
     return snakeBody.some((segment, index) => {
         if (ignoreHead === true && index === 0) return false
@@ -127,6 +129,7 @@ function snakeGrow(rate) {
     bodyGrowth += rate
 };
 
+//Updates the score and high score when the snake eats an apple
 function updateScore() {
     newScore++
     score.innerText = ("Score: " + newScore)
@@ -145,19 +148,19 @@ function addLength() {
     bodyGrowth = 0
 };
 
-//Helper function
+//Helper function to tell the game where the snake's head is
 function snakeHeadLocation() {
     return snakeBody[0]
 };
 
-//Helper function
+//Helper function to tell the game where the boundaries of the game are
 function hitWall(check) {
     if (check.x < 0 || check.x > 25 || check.y < 0 || check.y > 25) {
         return true;
     }
 };
 
-//Helper function
+//Helper function to make sure the game knows the snakes head isn't intersecting itself
 function snakeIntersection() {
     return snakeEat(snakeBody[0], {ignoreHead: true})
 };
@@ -180,7 +183,7 @@ function gameRestart() {
     }
 }
 
-//Handles the check, growth, and calls the randomization of the apple
+//Handles the check, growth, and calls the randomization of the apple everytime the apple is eaten
 function updateGame() {
     if (snakeEat(apple)) {
         snakeGrow(snakeGrowthRate)
