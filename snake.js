@@ -177,7 +177,6 @@ function gameRestart() {
     if (gameState === false) {
         if (confirm(`Your score was ${newScore}! Press "OK" to try again!`)) {
             window.location = '/'
-            newHighScore = newHighScore
         }
         return
     }
