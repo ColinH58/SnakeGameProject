@@ -7,7 +7,7 @@ X 5 have the game end if the snake runs into a wall
 X 6 see how long my snake was when the game ended
 7 start the game over without having to reset the browser
 BONUS
-8 can set the difficulty (speed of snake)
+X 8 can set the difficulty (speed of snake)
 9 can keep track of my stats (maximum points, average points, etc.) between games
 */
 
@@ -18,12 +18,11 @@ const gameBoard = document.getElementById('GameBoard');
 let gameState = true;
 
 //Adjust this to change the difficulty. The higher the number the faster the snake moves, 10 is the default
-let difficulty = 10;
+let difficulty = document.getElementById("DifficultySlider");
 
 //Adjust this to change the difficulty. The higher the number the fast the snake grows
 let snakeGrowthRate = 1;
 let bodyGrowth = 0;
-
 
 let score = document.getElementById('Score');
 let newScore = 0;
@@ -192,7 +191,7 @@ function updateGame() {
 //Puts all the above logic together and checks for the game's state
 function renderGame() {
     if (gameState) {
-        setTimeout(renderGame, 1000 / difficulty);
+        setTimeout(renderGame, 1000 / difficulty.value);
         drawSnake(gameBoard);
         placeFood(gameBoard);
         moveSnake();
