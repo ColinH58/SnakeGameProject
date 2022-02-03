@@ -1,15 +1,14 @@
 /* 
-01 start the game by pressing a Start button
-02 use my arrow keys to change the direction of the snake
-03 have the snake grow correctly when it eats the apple
-04 have the game end if the snake tries to eat itself
-05 have the game end if the snake runs into a wall
-06 see how long my snake was when the game ended
-07 start the game over without having to reset the browser
-08 As a user playing the game I would be delighted if I:
+1 start the game by pressing a Start button
+X 2 use my arrow keys to change the direction of the snake
+X 3 have the snake grow correctly when it eats the apple
+X 4 have the game end if the snake tries to eat itself
+X 5 have the game end if the snake runs into a wall
+X 6 see how long my snake was when the game ended
+7 start the game over without having to reset the browser
 BONUS
-09 can set the difficulty (speed of snake)
-10 can keep track of my stats (maximum points, average points, etc.) between games
+8 can set the difficulty (speed of snake)
+9 can keep track of my stats (maximum points, average points, etc.) between games
 */
 
 //Hooks into the GameBoard div
@@ -131,8 +130,12 @@ function snakeGrow(rate) {
 
 function updateScore() {
     newScore++
-    return score.innerText = ("Score: " + newScore)
-}
+    score.innerText = ("Score: " + newScore)
+    if (newScore > newHighScore) {
+        newHighScore = newScore
+        highScore.innerText = ("High Score: " + newHighScore)
+    }
+};
 
 //Handles the actual growth logic for the snake
 function addLength() {
@@ -171,9 +174,8 @@ function gameOver() {
 function gameRestart() {
     if (gameState === false) {
         if (confirm(`Your score was ${newScore}! Press "OK" to try again!`)) {
-            newScore = newHighScore
-            highScore.innerText = ("High Score: " + newHighScore)
             window.location = '/'
+            newHighScore = newHighScore
         }
         return
     }
