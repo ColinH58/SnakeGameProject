@@ -179,9 +179,6 @@ function gameOver() {
 
 //Handles the game reset
 function gameRestart() {
-    if (newScore > newHighScore) {
-        newHighScore = newScore
-    }
     gameBoard.style.borderColor = "darkgray"
     snakeBody = [{x: 12, y: 12}]
     moveDirection = {x: 0, y: 0}
