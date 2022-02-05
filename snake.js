@@ -200,7 +200,7 @@ function updateGame() {
 function renderGame() {
     if (gameState == true) {
         infoText.textContent = "🐍 Good Luck! 🐍"
-        setTimeout(renderGame, 1000 / difficulty.value);
+        setTimeout(renderGame, 500 / difficulty.value);
         drawSnake(gameBoard);
         placeFood(gameBoard);
         moveSnake();
