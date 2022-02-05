@@ -99,8 +99,8 @@ function moveSnake(){
 //Helper function to make sure the apple doesn't spawn outside the grid or in the snake
 function safeLocation() {
     return (
-        apple.x = Math.floor(Math.random() * 22) + 1,
-        apple.y = Math.floor(Math.random() * 22) + 1
+        apple.x = Math.floor(Math.random() * 21) + 1,
+        apple.y = Math.floor(Math.random() * 21) + 1
     )
 };
 
@@ -170,8 +170,8 @@ function snakeIntersection() {
 //Handles the game over logic with the help of the above functions
 function gameOver() {
     if(hitWall(snakeHeadLocation()) || snakeIntersection()) {
-        gameBoard.style.borderColor = "red"
-        infoText.textContent = `💣 Game Over! 💣`
+        infoText.textContent = `💀 Game Over! 💀`
+        document.getElementById("StartGame").innerText = "Restart"
         gameState = false;
         gameRestart();
     }
@@ -179,7 +179,7 @@ function gameOver() {
 
 //Handles the game reset
 function gameRestart() {
-    gameBoard.style.borderColor = "darkgray"
+    gameBoard.style.color = "darkgray"
     snakeBody = [{x: 12, y: 12}]
     moveDirection = {x: 0, y: 0}
     apple = {x: 4, y: 4}
@@ -211,6 +211,7 @@ let startGame = document.getElementById("StartGame").addEventListener("click", (
         score.innerText = "Score: 0"
         newScore = 0
         gameState = true
+        moveDirection = {x: 0, y: 0}
         renderGame();
     }
 });
