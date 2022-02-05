@@ -30,6 +30,7 @@ let newScore = 0;
 let highScore = document.getElementById('HighScore');
 let newHighScore = 0;
 
+//Hooks into the prompt text
 let infoText = document.getElementById("info");
 
 //Creates the snake and apple and sets them to a default location
@@ -167,6 +168,13 @@ function snakeIntersection() {
     return snakeEat(snakeBody[0], {ignoreHead: true})
 };
 
+//Handles the game reset
+function gameRestart() {
+    snakeBody = [{x: 12, y: 12}]
+    moveDirection = {x: 0, y: 0}
+    apple = {x: 4, y: 4}
+};
+
 //Handles the game over logic with the help of the above functions
 function gameOver() {
     if(hitWall(snakeHeadLocation()) || snakeIntersection()) {
@@ -177,13 +185,6 @@ function gameOver() {
         gameRestart();
     }
 }
-
-//Handles the game reset
-function gameRestart() {
-    snakeBody = [{x: 12, y: 12}]
-    moveDirection = {x: 0, y: 0}
-    apple = {x: 4, y: 4}
-};
 
 //Handles the check, growth, and calls the randomization of the apple everytime the apple is eaten
 function updateGame() {
