@@ -1,14 +1,16 @@
 /* 
-X 1 start the game by pressing a Start button
-X 2 use my arrow keys to change the direction of the snake
-X 3 have the snake grow correctly when it eats the apple
-X 4 have the game end if the snake tries to eat itself
-X 5 have the game end if the snake runs into a wall
-X 6 see how long my snake was when the game ended
-X 7 start the game over without having to reset the browser
-BONUS
-X 8 can set the difficulty (speed of snake)
-9 can keep track of my stats (maximum points, average points, etc.) between games
+SPECS LIST
+✔ 1 start the game by pressing a Start button
+✔ 2 use my arrow keys to change the direction of the snake
+✔ 3 have the snake grow correctly when it eats the apple
+✔ 4 have the game end if the snake tries to eat itself
+✔ 5 have the game end if the snake runs into a wall
+✔ 6 see how long my snake was when the game ended
+✔ 7 start the game over without having to reset the browser
+
+~BONUS SPECS~
+✔ 8 can set the difficulty (speed of snake)
+HALF ✔ 9 can keep track of my stats (maximum points, average points, etc.) between games
 */
 
 //Hooks into the gameboard
@@ -168,7 +170,7 @@ function snakeIntersection() {
     return snakeEat(snakeBody[0], {ignoreHead: true})
 };
 
-//Handles the game reset
+//Helper funciton, helps reset the snake, apple and move direction
 function gameRestart() {
     snakeBody = [{x: 12, y: 12}]
     moveDirection = {x: 0, y: 0}
@@ -207,6 +209,7 @@ function renderGame() {
     gameOver();
 };
 
+//Allows the Start/Restart button to start/reset the game then runs the game
 let startGame = document.getElementById("StartGame").addEventListener("click", () => {
     if (gameState == false) {
         score.innerText = "Score: 0"
@@ -214,6 +217,8 @@ let startGame = document.getElementById("StartGame").addEventListener("click", (
         moveDirection = {x: 0, y: 0}
         gameBoard.style.borderColor = "darkgray"
         gameState = true
+        renderGame();
+    } else {
         renderGame();
     }
 });
