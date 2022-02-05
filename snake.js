@@ -1,11 +1,11 @@
 /* 
-1 start the game by pressing a Start button
+X 1 start the game by pressing a Start button
 X 2 use my arrow keys to change the direction of the snake
 X 3 have the snake grow correctly when it eats the apple
 X 4 have the game end if the snake tries to eat itself
 X 5 have the game end if the snake runs into a wall
 X 6 see how long my snake was when the game ended
-7 start the game over without having to reset the browser
+X 7 start the game over without having to reset the browser
 BONUS
 X 8 can set the difficulty (speed of snake)
 9 can keep track of my stats (maximum points, average points, etc.) between games
@@ -15,7 +15,7 @@ X 8 can set the difficulty (speed of snake)
 const gameBoard = document.getElementById('GameBoard');
 
 //Used to check if the game is active or over
-let gameState = true;
+let gameState = false;
 
 //Hooks into the difficulty slider to divide by in the render function
 let difficulty = document.getElementById("DifficultySlider");
@@ -29,6 +29,8 @@ let score = document.getElementById('Score');
 let newScore = 0;
 let highScore = document.getElementById('HighScore');
 let newHighScore = 0;
+
+let infoText = document.getElementById("info");
 
 //Creates the snake and apple and sets them to a default location
 let snakeBody = [{x: 12, y: 12}];
@@ -97,8 +99,8 @@ function moveSnake(){
 //Helper function to make sure the apple doesn't spawn outside the grid or in the snake
 function safeLocation() {
     return (
-        apple.x = Math.floor(Math.random() * 23) + 1,
-        apple.y = Math.floor(Math.random() * 23) + 1
+        apple.x = Math.floor(Math.random() * 22) + 1,
+        apple.y = Math.floor(Math.random() * 22) + 1
     )
 };
 
@@ -155,7 +157,7 @@ function snakeHeadLocation() {
 
 //Helper function to tell the game where the boundaries of the game are
 function hitWall(check) {
-    if (check.x < 0 || check.x > 25 || check.y < 0 || check.y > 25) {
+    if (check.x < 1 || check.x > 24 || check.y < 1 || check.y > 24) {
         return true;
     }
 };
@@ -168,19 +170,23 @@ function snakeIntersection() {
 //Handles the game over logic with the help of the above functions
 function gameOver() {
     if(hitWall(snakeHeadLocation()) || snakeIntersection()) {
+        gameBoard.style.borderColor = "red"
+        infoText.textContent = `💣 Game Over! 💣`
         gameState = false;
+        gameRestart();
     }
 }
 
 //Handles the game reset
 function gameRestart() {
-    if (gameState === false) {
-        if (confirm(`Your score was ${newScore}! Press "OK" to try again!`)) {
-            window.location = '/'
-        }
-        return
+    if (newScore > newHighScore) {
+        newHighScore = newScore
     }
-}
+    gameBoard.style.borderColor = "darkgray"
+    snakeBody = [{x: 12, y: 12}]
+    moveDirection = {x: 0, y: 0}
+    apple = {x: 4, y: 4}
+};
 
 //Handles the check, growth, and calls the randomization of the apple everytime the apple is eaten
 function updateGame() {
@@ -192,16 +198,22 @@ function updateGame() {
 
 //Puts all the above logic together and checks for the game's state
 function renderGame() {
-    if (gameState === true) {
+    if (gameState == true) {
+        infoText.textContent = "🐍 Good Luck! 🐍"
         setTimeout(renderGame, 1000 / difficulty.value);
         drawSnake(gameBoard);
         placeFood(gameBoard);
         moveSnake();
         updateGame();
-        gameOver();
     }
-    gameRestart();
+    gameOver();
 };
 
-//Runs the Game!
-renderGame();
+let startGame = document.getElementById("StartGame").addEventListener("click", () => {
+    if (gameState == false) {
+        score.innerText = "Score: 0"
+        newScore = 0
+        gameState = true
+        renderGame();
+    }
+});

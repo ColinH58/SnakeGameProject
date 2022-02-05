@@ -15,16 +15,17 @@ body {
     grid-template-columns: repeat(24, 1fr);
     width: 75vmin;
     height: 75vmin;
-    z-index: 0;
     border: 1vmin solid darkgray;
 }
 
 #Information {
     margin: 25px;
+    padding: 25px;
     display: grid;
-    justify-content: space-evenly;
+    grid-gap: 20px;
     color: white;
-    z-index: 1;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .snake {
