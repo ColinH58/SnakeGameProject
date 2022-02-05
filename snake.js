@@ -192,7 +192,7 @@ function updateGame() {
 
 //Puts all the above logic together and checks for the game's state
 function renderGame() {
-    if (gameState) {
+    if (gameState === true) {
         setTimeout(renderGame, 1000 / difficulty.value);
         drawSnake(gameBoard);
         placeFood(gameBoard);
