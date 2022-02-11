@@ -1,13 +1,12 @@
 html {
-    margin: 0;
     background-image: url("https://i.imgur.com/tuSFSYK.jpg");
-    background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     background-color: black;
 }
 
 body {
+    margin: 0;
     background-color: hsla(0,0%,0%, 40%);
     display: flex;
     justify-content: center;
