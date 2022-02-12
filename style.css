@@ -1,5 +1,5 @@
 html {
-    background-image: url("/assets/SnakeBackground.jpg");
+    background-image: url("assets/SnakeBackground.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-color: black;
